@@ -1,0 +1,42 @@
+.appointment-calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .days-of-week {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .day-of-week {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .time-slots {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 100px;
+  }
+  
+  .time-slot {
+    background-color: #12954f;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 16px;
+  }
+  
+  .time-slot:hover {
+    background-color: #2dd4a5;
+  }
+  .react-calendar {
+    width: 800px;
+    height: 800px;
+    max-width: 100%;
+  }
+  

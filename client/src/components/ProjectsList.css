@@ -1,0 +1,57 @@
+/* ProjectsList.css */
+
+.project-card {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 60%;
+  }
+  
+  .project-card h2 {
+    border-bottom: 2px solid #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  
+  .project-card ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .project-card li {
+    background-color: #e6e6e6;
+    border-radius: 3px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+  }
+  
+  select {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  button {
+    background-color: #4caf50;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  

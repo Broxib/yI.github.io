@@ -6,7 +6,7 @@ const AppBar = ({ username }) => {
   return (
     <header className="app-bar">
       <div className="app-bar-title">
-        <h1>Conseil Gest Plus</h1>
+        <h1>Conseil Guest Plus</h1>
       </div>
       <nav className="app-bar-nav">
         <NavLink to="/" activeClassName="active" exact>
