@@ -1,0 +1,30 @@
+.app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    padding: 15px;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  .app-bar-title h1 {
+    margin: 0;
+  }
+  
+  .app-bar-nav {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .app-bar-nav a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .app-bar-nav a:hover,
+  .app-bar-nav a.active {
+    color: #cce5ff;
+  }
+  
