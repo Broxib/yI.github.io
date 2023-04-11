@@ -16,6 +16,11 @@ const AppointmentBooking = () => {
   const handleBackToDashboard = () => {
     navigate('/');
   };
+  const handleBackToService = () => {
+    setSubmitted(true);
+    
+    navigate('/projects/1');
+  };
 
   const handleSubmitAppointment = () => {
     setSubmitted(true);
@@ -34,7 +39,7 @@ const AppointmentBooking = () => {
             onChange={(e) => setAppointmentDetails(e.target.value)}
             placeholder="Please specify your appointment needs"
           />
-          <button className="submit-appointment" onClick={handleSubmitAppointment}>
+          <button className="submit-appointment" onClick={handleSubmitAppointment,handleBackToService}>
             Submit Appointment
           </button>
         </>
@@ -43,6 +48,7 @@ const AppointmentBooking = () => {
         <div className="congratulations-card">
           <h3>Congratulations!</h3>
           <p>Your appointment has been successfully booked.</p>
+        
         </div>
       )}
       <button className="back-to-dashboard" onClick={handleBackToDashboard}>
