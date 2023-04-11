@@ -15,6 +15,9 @@ const AppBar = ({ username }) => {
         <NavLink to="/book-appointment" activeClassName="active">
           Book Appointment
         </NavLink>
+        <NavLink to="/about-us" activeClassName="active">
+          About Us
+        </NavLink>
       </nav>
       <div className="app-bar-user">
         <p>Welcome, {username}!</p>

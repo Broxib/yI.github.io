@@ -5,7 +5,8 @@ import Dashboard from './components/Dashboard';
 import AppointmentBooking from './components/AppointmentBooking';
 import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
-
+import AboutUs from './components/About-us.js'
+import AppBar from './components/AppBar.js'
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -37,6 +38,7 @@ const App = () => {
             <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
             <Route path="/book-appointment" element={<AppointmentBooking />} />
             <Route path="/projects/:id" element={<ProjectsList />} />
+            <Route path="/About-us" element={<AboutUs />} />
           </Routes>
         </Router>
       ) : (
