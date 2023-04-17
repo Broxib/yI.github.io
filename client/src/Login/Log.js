@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Log.css'
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 const Log = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigate = useNavigate(); // Add this line to use the useNavigate hook
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onLogin({ email, password });
   };
 
+  const handleCreateAccount = () => { // Add this function to handle navigation
+    navigate('/account');
+  };
   return (
     <div className="login-form">
       <h2>Conseil Gest Plus Login</h2>
@@ -38,12 +44,15 @@ const Log = ({ onLogin }) => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <button onClick={handleCreateAccount} className="create-account">Create Account</button>
+
     </div>
   );
 };
 
 Log.propTypes = {
   onLogin: PropTypes.func.isRequired,
+  onCreateAccount: PropTypes.func.isRequired,
 };
 
 export default Log;

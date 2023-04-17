@@ -7,13 +7,16 @@ import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
 import AboutUs from './components/About-us.js'
 import AppBar from './components/AppBar.js'
+
+import CreateAccount from './Account/CreateAccount.js'
+import ManageAccount from './Account/ManageAccount.js'
 import Maindashbord from './AdminVIew/Maindashbord.js'
 import ProjectDetailss from './AdminVIew/Projectdetails';
 import Appointment from './AdminVIew/AppointmentView.js';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem('isLoggedIn');
     if (storedLoginStatus === 'true') {
@@ -34,25 +37,37 @@ const App = () => {
     localStorage.setItem('isLoggedIn', 'false');
   };
 
+  const handleCreateAccount = (userData) => {
+    // Process the account creation with userData
+    console.log('Account created:', userData);
+  };
+
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <Router>
-          <Routes>
-            <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
-            <Route path="/book-appointment" element={<AppointmentBooking />} />
-            <Route path="/projects/:id" element={<ProjectsList />} />
-            <Route path="/About-us" element={<AboutUs />} />
-            {/* <Route path="/AdminView" element={<AppBar2 />} /> */}
-            <Route path="/AdminView" element={<Maindashbord />} />
-      
+
+      <Router>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+              <Route path="/book-appointment" element={<AppointmentBooking />} />
+              <Route path="/projects/:id" element={<ProjectsList />} />
+              <Route path="/About-us" element={<AboutUs />} />
+              <Route path="/ManageAccount" element={<ManageAccount />} />
+               <Route path="/AdminView" element={<Maindashbord />} />
+  
             <Route path="/AdminView/:clientName" element={<ProjectDetailss />} />
             <Route path="/AdminView/Appointment" element={<Appointment />} />
-          </Routes>
-        </Router>
-      ) : (
-        <Log onLogin={handleLogin} />
-      )}
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Log onLogin={handleLogin} />} />
+              <Route path="/account" element={<CreateAccount />} />
+            </>
+          )}
+        </Routes>
+      </Router>
+
     </div>
   );
 };

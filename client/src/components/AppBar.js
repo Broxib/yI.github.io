@@ -18,10 +18,12 @@ const AppBar = ({ username }) => {
         <NavLink to="/about-us" activeClassName="active">
           About Us
         </NavLink>
+        <div>           </div>
+        <NavLink to="/manageaccount"  activeClassName="active">
+          Welcome, {username}!
+      </NavLink>
       </nav>
-      <div className="app-bar-user">
-        <p>Welcome, {username}!</p>
-      </div>
+     
     </header>
   );
 };
