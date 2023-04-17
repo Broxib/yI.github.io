@@ -52,9 +52,14 @@ const AppBar = ({ username }) => {
           <button type="submit">Search</button>
         </form>
       </div>
-      <div className="app-bar-user">
-        <p>Welcome, {username}!</p>
-      </div>
+      {/* <div className="app-bar-user"> */}
+      <nav className="app-bar-nav">
+      <NavLink to="/manageaccount"  activeClassName="active">
+          Welcome, {username}!
+      </NavLink>
+      </nav>
+      
+      {/* </div> */}
     </header>
   );
 };

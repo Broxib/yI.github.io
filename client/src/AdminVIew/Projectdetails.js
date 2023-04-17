@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import './ClientDetails.css';
 
-const ClientDetails = () => {
+import './Projectdetails.css';
+
+const ProjectDetails = () => {
   const { clientName } = useParams();
   const location = useLocation();
   const initialProjects = location.state.projects;
@@ -62,4 +63,4 @@ const ClientDetails = () => {
   );
 };
 
-export default ClientDetails;
+export default ProjectDetails;
