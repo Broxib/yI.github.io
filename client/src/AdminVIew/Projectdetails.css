@@ -1,0 +1,72 @@
+/* ProjectDetails.css */
+
+.client-details {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.client-details h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.project {
+  margin-bottom: 30px;
+}
+
+.project h3 {
+  font-size: 18px;
+  display: inline;
+}
+
+.project button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.project button:hover {
+  background-color: #45a049;
+}
+
+.project table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.project table, .project th, .project td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.project th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.project tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.project tr:hover {
+  background-color: #ddd;
+}
+
+.project td {
+  vertical-align: top;
+}
