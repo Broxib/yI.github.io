@@ -13,10 +13,10 @@ const ClientProfile = () => {
   });
 
   const [userInfo, setUserInfo] = useState({
-    name: 'John Doe',
+    name: 'Yassine',
     age: 28,
     dob: '1995-05-15',
-    email: 'john.doe@example.com',
+    email: 'y.ibrok@aui.ma',
     phone: '555-123-4567',
     address: '123 Main St, City, Country',
   });

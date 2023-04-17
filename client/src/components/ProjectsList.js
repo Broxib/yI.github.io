@@ -112,7 +112,6 @@ const ProjectsList = () => {
  
   const handleBookAppointment = () => {
     navigate('/book-appointment');
-    // Once the appointment is booked, you can navigate back to the ProjectsList using the navigate function
     navigate('/add-service');
   };
 
@@ -139,7 +138,6 @@ const ProjectsList = () => {
       }
     });
 
-    // update project state with new files array
     const newProjects = projects.map((project) => {
       if (project.id.toString() === id) {
         return {

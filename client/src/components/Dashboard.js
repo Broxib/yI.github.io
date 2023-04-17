@@ -8,12 +8,11 @@ import './Dashboard.css';
 import CreateProjectModal from './CreateProjectModal';
 
 const Dashboard = () => {
-  // Replace these values with the actual data for the user
   const [projects, setProjects] = useState([
     {
       id: 1,
       name: 'Project 1',
-      owner: 'John Doe',
+      owner: 'Yassine Ibrok',
       budget: 5000,
       services: [
         { name: 'Service 1', price: 100 },
@@ -24,7 +23,7 @@ const Dashboard = () => {
     {
       id: 2,
       name: 'Project 2',
-      owner: 'Jane Smith',
+      owner: 'Driss Kettani',
       budget: 8000,
       services: [
         { name: 'Service 4', price: 400 },
@@ -35,7 +34,7 @@ const Dashboard = () => {
     {
       id: 3,
       name: 'Project 3',
-      owner: 'Bob Johnson',
+      owner: 'Suhayb Daud',
       budget: 12000,
       services: [
         { name: 'Service 7', price: 700 },

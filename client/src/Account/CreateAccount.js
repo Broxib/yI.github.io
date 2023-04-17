@@ -28,7 +28,7 @@ const CreateAccount = ({ onCreate }) => {
       }, 3000);
     }
   };
-  // 
+
   return (
     <div className="create-account-form">
       <h2>Create Account</h2>
@@ -45,7 +45,7 @@ const CreateAccount = ({ onCreate }) => {
             required
           />
         </div>
-        {/* Age */}
+     
         <div>
           <label htmlFor="age">Age:</label>
           <input

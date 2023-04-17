@@ -12,7 +12,7 @@ const AppBar = ({ username }) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    console.log("Search text:", searchText); // Replace with your search logic
+    console.log("Search text:", searchText); 
   };
 
   const handleOptionChange = (event) => {

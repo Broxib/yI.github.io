@@ -67,7 +67,6 @@ const App = () => {
   }, [isLoggedIn]);
 
   const handleCreateAccount = (userData) => {
-    // Process the account creation with userData
     console.log('Account created:', userData);
   };
 

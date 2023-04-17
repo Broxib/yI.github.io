@@ -16,7 +16,7 @@ const AppointmentView = () => {
     event.preventDefault();
     console.log('Appointment date:', appointmentDate);
     console.log('Appointment time:', appointmentTime);
-    // Replace with your appointment logic
+  
   };
 
   return (

@@ -9,12 +9,12 @@ import "./Table1.css";
 const Dashboard = () => {
 
   const employeeNames = [
-    'Alice',
-    'Bob',
-    'Charlie',
-    'David',
-    'Eve',
-    'Frank',
+    'Ahmed',
+    'Saad',
+    'Yassine',
+    'Suhayb',
+    'Hamza',
+    'Driss',
   ];
 
   const getRandomEmployee = () => {
@@ -25,7 +25,7 @@ const Dashboard = () => {
     {
       id: 1,
       name: "Project 1",
-      owner: "John Doe",
+      owner: "Yassine Ibrok",
       budget: 5000,
       services: [
         { name: "Service 1", price: 10, employee: getRandomEmployee() },
@@ -36,7 +36,7 @@ const Dashboard = () => {
     {
       id: 2,
       name: "Project 2",
-      owner: "Jane Smith",
+      owner: "Driss Kettani",
       budget: 8000,
       services: [
         { name: "Service 4", price: 400, employee: getRandomEmployee() },
@@ -47,7 +47,7 @@ const Dashboard = () => {
     {
       id: 3,
       name: "Project 3",
-      owner: "Bobbb Johnson",
+      owner: "Suhayb Daud",
       budget: 12000,
       services: [
         { name: "Service 7", price: 700, employee: getRandomEmployee() },
@@ -58,7 +58,7 @@ const Dashboard = () => {
     {
       id: 4,
       name: "Project 4",
-      owner: "Bobbb Johnson",
+      owner: "Suhayb Daud",
       budget: 14000,
       services: [
         { name: "Service 10", price: 700, employee: getRandomEmployee() },
@@ -69,7 +69,7 @@ const Dashboard = () => {
     {
       id: 5,
       name: "Project 5",
-      owner: "Jane Smith",
+      owner: "Driss Kettani",
       budget: 34000,
       services: [
         { name: "Service 13", price: 700, employee: getRandomEmployee() },
