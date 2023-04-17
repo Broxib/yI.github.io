@@ -1,99 +1,98 @@
 /* Dashboard.css */
 .container {
-    margin: auto auto;
-    max-width: 400px;
-    padding: 2rem;
-  }
-  
-  .dashboard-cards {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5rem;
-  }
-  
-  .dashboard-card {
-    width: 80%;
-    background-color: #f9f9f9;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-card__title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .dashboard-card__value {
-    font-size: 3rem;
-    font-weight: bold;
-    margin-top: 1rem;
-  }
-  
-  .dashboard-card__description {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-  
-  .project-card {
-    background-color: #d70909;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-  }
-  
-  .project-card__title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .project-card__owner {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .project-card__budget {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .project-card__button {
-    background-color: #0077cc;
-    color: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .project-card__button:hover {
-    background-color: #005fa3;
-  }
-  
-  .project-list {
-    margin-top: 1rem;
-  }
-  
-  .project-list__title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .project-list__list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .project-list__list-item {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-  }
-  
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.dashboard-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card {
+  width: 30%;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.dashboard-card__value {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.dashboard-card__description {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.project-card {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.project-card__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.project-card__owner {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card__budget {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.project-card__button {
+  background-color: #0077cc;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.project-card__button:hover {
+  background-color: #005fa3;
+}
+
+.project-list {
+  margin-top: 1rem;
+}
+
+.project-list__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.project-list__list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.project-list__list-item {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
