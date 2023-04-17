@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/yI.github.io/static/css/main.f962a9cc.css",
+    "main.js": "/yI.github.io/static/js/main.1745f9de.js",
+    "pdf.worker.js": "/yI.github.io/1c5b31b839a734542856f6b6f7a28f4f.js",
+    "index.html": "/yI.github.io/index.html",
+    "main.f962a9cc.css.map": "/yI.github.io/static/css/main.f962a9cc.css.map",
+    "main.1745f9de.js.map": "/yI.github.io/static/js/main.1745f9de.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f962a9cc.css",
+    "static/js/main.1745f9de.js"
+  ]
+}
