@@ -7,8 +7,13 @@ import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
 import AboutUs from './components/About-us.js'
 import AppBar from './components/AppBar.js'
+
 import CreateAccount from './Account/CreateAccount.js'
 import ManageAccount from './Account/ManageAccount.js'
+import Maindashbord from './AdminVIew/Maindashbord.js'
+import ProjectDetailss from './AdminVIew/Projectdetails';
+import Appointment from './AdminVIew/AppointmentView.js';
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
@@ -39,6 +44,7 @@ const App = () => {
 
   return (
     <div className="App">
+
       <Router>
         <Routes>
           {isLoggedIn ? (
@@ -48,6 +54,10 @@ const App = () => {
               <Route path="/projects/:id" element={<ProjectsList />} />
               <Route path="/About-us" element={<AboutUs />} />
               <Route path="/ManageAccount" element={<ManageAccount />} />
+               <Route path="/AdminView" element={<Maindashbord />} />
+  
+            <Route path="/AdminView/:clientName" element={<ProjectDetailss />} />
+            <Route path="/AdminView/Appointment" element={<Appointment />} />
             </>
           ) : (
             <>
@@ -57,6 +67,7 @@ const App = () => {
           )}
         </Routes>
       </Router>
+
     </div>
   );
 };

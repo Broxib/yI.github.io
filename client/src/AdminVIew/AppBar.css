@@ -1,0 +1,37 @@
+.app-bar-search {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .app-bar-search input {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .app-bar-search button {
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #03494a;
+    cursor: pointer;
+  }
+
+  .app-bar-dropdown-search {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .app-bar-dropdown {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 1rem;
+  }
+  
+  /* Keep the existing CSS for .app-bar-search, .app-bar-search input, and .app-bar-search button */
+  
+  
