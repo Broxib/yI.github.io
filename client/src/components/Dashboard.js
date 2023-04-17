@@ -116,7 +116,9 @@ const Dashboard = () => {
           <ProjectDetails project={selectedProject} onClose={handleCloseModal} />
 
         )}
+        
       </div>
+      
     </>
   );
 };

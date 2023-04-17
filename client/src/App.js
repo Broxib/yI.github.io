@@ -5,13 +5,14 @@ import Dashboard from './components/Dashboard';
 import AppointmentBooking from './components/AppointmentBooking';
 import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
-import AboutUs from './components/About-us.js'
-import AppBar from './components/AppBar.js'
-import CreateAccount from './Account/CreateAccount.js'
-import ManageAccount from './Account/ManageAccount.js'
+import AboutUs from './components/About-us.js';
+import AppBar from './components/AppBar.js';
+import CreateAccount from './Account/CreateAccount.js';
+import ManageAccount from './Account/ManageAccount.js';
+
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem('isLoggedIn');
     if (storedLoginStatus === 'true') {
@@ -31,6 +32,12 @@ const App = () => {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', 'false');
   };
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      localStorage.removeItem('isLoggedIn');
+    }
+  }, [isLoggedIn]);
 
   const handleCreateAccount = (userData) => {
     // Process the account creation with userData

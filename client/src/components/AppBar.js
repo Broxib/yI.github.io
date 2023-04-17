@@ -1,8 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import './AppBar.css';
 
 const AppBar = ({ username }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    sessionStorage.clear();
+    navigate('/');
+  };
+
   return (
     <header className="app-bar">
       <div className="app-bar-title">
@@ -18,12 +24,15 @@ const AppBar = ({ username }) => {
         <NavLink to="/about-us" activeClassName="active">
           About Us
         </NavLink>
-        <div>           </div>
-        <NavLink to="/manageaccount"  activeClassName="active">
-          Welcome, {username}!
-      </NavLink>
+        <div>
+          <NavLink to="/manageaccount" activeClassName="active">
+            Welcome, {username}!
+          </NavLink>
+          <NavLink to="/" onClick={handleLogout}>
+            Logout
+          </NavLink>
+        </div>
       </nav>
-     
     </header>
   );
 };
