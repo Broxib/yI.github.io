@@ -7,9 +7,11 @@ import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
 import AboutUs from './components/About-us.js'
 import AppBar from './components/AppBar.js'
+import CreateAccount from './Account/CreateAccount.js'
+import ManageAccount from './Account/ManageAccount.js'
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem('isLoggedIn');
     if (storedLoginStatus === 'true') {
@@ -30,20 +32,31 @@ const App = () => {
     localStorage.setItem('isLoggedIn', 'false');
   };
 
+  const handleCreateAccount = (userData) => {
+    // Process the account creation with userData
+    console.log('Account created:', userData);
+  };
+
   return (
     <div className="App">
-      {isLoggedIn ? (
-        <Router>
-          <Routes>
-            <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
-            <Route path="/book-appointment" element={<AppointmentBooking />} />
-            <Route path="/projects/:id" element={<ProjectsList />} />
-            <Route path="/About-us" element={<AboutUs />} />
-          </Routes>
-        </Router>
-      ) : (
-        <Log onLogin={handleLogin} />
-      )}
+      <Router>
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+              <Route path="/book-appointment" element={<AppointmentBooking />} />
+              <Route path="/projects/:id" element={<ProjectsList />} />
+              <Route path="/About-us" element={<AboutUs />} />
+              <Route path="/ManageAccount" element={<ManageAccount />} />
+            </>
+          ) : (
+            <>
+              <Route path="/" element={<Log onLogin={handleLogin} />} />
+              <Route path="/account" element={<CreateAccount />} />
+            </>
+          )}
+        </Routes>
+      </Router>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import DashboardCard from './DashboardCard';
 import ProjectModal from './ProjectModal';
 import ProjectDetails from './ProjectDetails';
 import './Dashboard.css';
+import CreateProjectModal from './CreateProjectModal';
 
 const Dashboard = () => {
   // Replace these values with the actual data for the user
@@ -50,6 +51,10 @@ const Dashboard = () => {
   const amountSpent = 1200;
   const nextAppointment = 'April 30, 2023';
   const username = 'yassine ibork';
+  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+  const handleCreateProject = (project) => {
+    setProjects([...projects, { ...project, id: projects.length + 1 }]);
+  };
 
   const handleProjectCardClick = (project) => {
     setSelectedProject(project);
@@ -60,7 +65,7 @@ const Dashboard = () => {
     setShowProjectModal(false);
     setSelectedProject(null);
   };
- 
+
   return (
     <>
       <AppBar username={username} />
@@ -86,7 +91,16 @@ const Dashboard = () => {
         </div>
         {showProjectModal && (
           <div className="project-list">
-            <h3>Projects</h3>
+            <h3>
+              Projects
+              <button onClick={() => setShowCreateProjectModal(true)} className="create-project-button">
+                Create New Project
+              </button>
+            </h3>
+            {showCreateProjectModal && (
+  <CreateProjectModal onCreate={handleCreateProject} onClose={() => setShowCreateProjectModal(false)} />
+)}
+
             <div className="project-cards">
               {projects.map((project) => (
                 <div key={project.id} className="project-card" onClick={() => handleProjectCardClick(project)}>
@@ -96,7 +110,7 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
-          </div>    
+          </div>
         )}
         {selectedProject && (
           <ProjectDetails project={selectedProject} onClose={handleCloseModal} />
