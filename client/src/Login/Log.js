@@ -8,14 +8,21 @@ const Log = ({ onLogin }) => {
 
   const navigate = useNavigate(); // Add this line to use the useNavigate hook
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin({ email, password });
+    const userType = await onLogin({ email, password });
+    if (userType === 'client') {
+      navigate('/');
+    } else if (userType === 'employee') {
+      navigate('/AdminView');
+    }
   };
+
 
   const handleCreateAccount = () => { // Add this function to handle navigation
     navigate('/account');
   };
+  
   return (
     <div className="login-form">
       <h2>Conseil Gest Plus Login</h2>
@@ -50,9 +57,9 @@ const Log = ({ onLogin }) => {
   );
 };
 
-Log.propTypes = {
-  onLogin: PropTypes.func.isRequired,
-  onCreateAccount: PropTypes.func.isRequired,
-};
+// Log.propTypes = {
+//   onLogin: PropTypes.func.isRequired,
+//   onCreateAccount: PropTypes.func.isRequired,
+// };
 
 export default Log;

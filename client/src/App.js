@@ -6,7 +6,6 @@ import AppointmentBooking from './components/AppointmentBooking';
 import ProjectDetails from './components/ProjectDetails';
 import ProjectsList from './components/ProjectsList';
 import AboutUs from './components/About-us.js';
-import AppBar from './components/AppBar.js';
 import CreateAccount from './Account/CreateAccount.js';
 import ManageAccount from './Account/ManageAccount.js';
 
@@ -15,20 +14,45 @@ import ProjectDetailss from './AdminVIew/Projectdetails';
 import Appointment from './AdminVIew/AppointmentView.js';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
 
   useEffect(() => {
     const storedLoginStatus = localStorage.getItem('isLoggedIn');
+    const storedUserType = localStorage.getItem('userType');
     if (storedLoginStatus === 'true') {
       setIsLoggedIn(true);
+      setUserType(storedUserType);
     }
   }, []);
 
+  const defaultAccounts = [
+    {
+      email: 'client@example.com',
+      password: 'client123',
+      type: 'client',
+    },
+    {
+      email: 'employee@example.com',
+      password: 'employee123',
+      type: 'employee',
+    },
+  ];
+
   const handleLogin = ({ email, password }) => {
-    // Implement your login logic here
-    // If the login is successful, set isLoggedIn to true
-    console.log('Email:', email, 'Password:', password);
-    setIsLoggedIn(true);
-    localStorage.setItem('isLoggedIn', 'true');
+    const account = defaultAccounts.find(
+      (account) => account.email === email && account.password === password
+    );
+  
+    if (account) {
+      setIsLoggedIn(true);
+      setUserType(account.type);
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userType', account.type);
+      return account.type;
+    } else {
+      console.log('Invalid email or password');
+      return null;
+    }
   };
 
   const handleLogout = () => {

@@ -4,7 +4,7 @@ import DashboardCard from "./DashboardCard";
 // import "./Maindashbord.css";
 import { Route, Routes } from "react-router-dom";
 import React, { useState, useMemo } from "react";
-// import ClientDetails from './Projectdetails';
+import "./Table1.css";
 
 const Dashboard = () => {
 
