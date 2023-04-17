@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import AppBar from "./AppBar";
 import DashboardCard from "./DashboardCard";
-import "./Maindashbord.css";
+// import "./Maindashbord.css";
 import { Route, Routes } from "react-router-dom";
 import React, { useState, useMemo } from "react";
 // import ClientDetails from './Projectdetails';
