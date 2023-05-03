@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import './CreateProjectModal.css';
+import axios from 'axios';
 
-const CreateProjectModal = ({ onCreate, onClose }) => {
+const CreateProjectModal = ({onCreate, onClose }) => {
+
   const [name, setName] = useState('');
   const [owner, setOwner] = useState('');
   const [budget, setBudget] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onCreate({ name, owner, budget: parseInt(budget, 10) });
-    onClose();
+    try {
+      await axios.post('http://localhost:1000/api/projects', { name, owner, budget: parseInt(budget, 10) });
+      onCreate({ name, owner, budget: parseInt(budget, 10) });
+      onClose();
+    } catch (error) {
+      console.error('Error creating project:', error);
+    }
   };
+
+
+
+
 
   return (
     <div className="create-project-modal">

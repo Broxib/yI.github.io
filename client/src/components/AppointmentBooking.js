@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AppointmentCalendar from './AppointmentCalendar';
 import { useNavigate } from 'react-router-dom';
 import './AppointmentBooking.css';
+import axios from 'axios';
 
 const AppointmentBooking = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -16,15 +17,21 @@ const AppointmentBooking = () => {
   const handleBackToDashboard = () => {
     navigate('/');
   };
-  const handleBackToService = () => {
-    setSubmitted(true);
-    
-    navigate('/projects/1');
-  };
 
-  const handleSubmitAppointment = () => {
-    setSubmitted(true);
+  const handleSubmitAppointment = async () => {
+    try {
+      await axios.post('http://localhost:1000/api/appointments', {
+        timeSlot: selectedTimeSlot,
+        details: appointmentDetails,
+      });
+      setSubmitted(true);
+      navigate('/', { state: { appointmentSubmitted: true } }); // Pass appointmentSubmitted as a state parameter
+    } catch (error) {
+      console.error('Error submitting appointment:', error);
+    }
   };
+  
+
 
   return (
     <div className="appointment-booking">
@@ -34,12 +41,13 @@ const AppointmentBooking = () => {
         <>
           <p className="selected-time-slot">Selected Time Slot: {selectedTimeSlot}</p>
           <textarea
+
             className="appointment-details"
             value={appointmentDetails}
             onChange={(e) => setAppointmentDetails(e.target.value)}
             placeholder="Please specify your appointment needs"
           />
-          <button className="submit-appointment" onClick={handleSubmitAppointment,handleBackToService}>
+          <button className="submit-appointment" onClick={handleSubmitAppointment}>
             Submit Appointment
           </button>
         </>

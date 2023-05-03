@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
-import { format, startOfWeek, endOfWeek, addDays } from 'date-fns';
-import './AppointmentCalendar.css';
+import React, { useState, useEffect } from "react";
+import { format, startOfWeek, endOfWeek, addDays } from "date-fns";
+import "./AppointmentCalendar.css";
+import axios from "axios";
 
 const AppointmentCalendar = ({ onTimeSlotSelected }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [timeSlots, setTimeSlots] = useState([]);
+
+  useEffect(() => {
+    const fetchTimeSlots = async () => {
+      try {
+        const response = await axios.get("http://localhost:1000/api/timeSlots");
+        setTimeSlots(response.data);
+      } catch (error) {
+        console.error("Error fetching time slots:", error);
+      }
+    };
+
+    fetchTimeSlots();
+  }, []);
 
   const renderDaysOfWeek = () => {
     const daysOfWeek = [];
@@ -11,7 +26,7 @@ const AppointmentCalendar = ({ onTimeSlotSelected }) => {
     for (let i = 0; i < 7; i++) {
       daysOfWeek.push(
         <div className="day-of-week" key={i}>
-          {format(addDays(start, i), 'EEE')}
+          {format(addDays(start, i), "EEE")}
         </div>
       );
     }
@@ -19,25 +34,20 @@ const AppointmentCalendar = ({ onTimeSlotSelected }) => {
   };
 
   const renderTimeSlots = () => {
-    const timeSlots = [];
-    for (let i = 9; i < 18; i++) {
-      const time = i < 10 ? `0${i}:00` : `${i}:00`;
-      timeSlots.push(
-        <button
-          className="time-slot"
-          key={i}
-          onClick={() => onTimeSlotSelected(time)}
-        >
-          {time}
-        </button>
-      );
-    }
-    return timeSlots;
+    return timeSlots.map((timeSlot, index) => (
+      <button
+        className="time-slot"
+        key={index}
+        onClick={() => onTimeSlotSelected(timeSlot)}
+      >
+        {timeSlot}
+      </button>
+    ));
   };
 
   return (
     <div className="appointment-calendar">
-      <div className="days-of-week">{renderDaysOfWeek()}</div>
+      {/* <div className="days-of-week">{renderDaysOfWeek()}</div> */}
       <div className="time-slots">{renderTimeSlots()}</div>
     </div>
   );

@@ -2,60 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProjectsList.css';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import axios from 'axios';
 
 
-const availableServices = [
-  { name: 'Service 1', price: 100 },
-  { name: 'Service 2', price: 200 },
-  { name: 'Service 3', price: 300 },
-  { name: 'Service 4', price: 400 },
-  { name: 'Service 5', price: 500 },
-  { name: 'Service 6', price: 600 },
-  { name: 'Service 7', price: 700 },
-  { name: 'Service 8', price: 800 },
-  { name: 'Service 9', price: 900 },
-];
 
 const ProjectsList = () => {
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      name: 'Project 1',
-      owner: 'John Doe',
-      budget: 1000,
-      services: [
-        { name: 'Service 1', price: 100 },
-        { name: 'Service 2', price: 200 },
-        { name: 'Service 3', price: 300 },
-      ],
-      files: [],
-    },
-    {
-      id: 2,
-      name: 'Project 2',
-      owner: 'Jane Smith',
-      budget: 2000,
-      services: [
-        { name: 'Service 4', price: 400 },
-        { name: 'Service 5', price: 500 },
-        { name: 'Service 6', price: 600 },
-      ],
-      files: [],
-    },
-    {
-      id: 3,
-      name: 'Project 3',
-      owner: 'Bob Johnson',
-      budget: 3000,
-      services: [
-        { name: 'Service 7', price: 700 },
-        { name: 'Service 8', price: 800 },
-        { name: 'Service 9', price: 900 },
-      ],
-      files: [],
-    },
-  ]);
+  const [available, setAvailable] = useState([]);
+  const [projects, setProjects] = useState([]);
+    
+ 
+  
+  
+  useEffect(() => {
+    fetchProjects();
+    availableServices();
+  }, []);
 
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/projects');
+      setProjects(response.data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+
+  const availableServices = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/availableServices');
+      setAvailable(response.data || []);
+    } catch (error) {
+      console.error('Error fetching available services:', error);
+    }
+  };
+  
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const { id } = useParams();
@@ -116,6 +98,9 @@ const ProjectsList = () => {
   };
 
   const handleFileChange = (e) => {
+    if (!e.target.files) return;
+
+ 
     const newFiles = [...e.target.files];
     newFiles.forEach((file) => {
       if (file.type.startsWith("image/")) {
@@ -164,6 +149,7 @@ const ProjectsList = () => {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   };
 
+
   return (
     <div>
       {selectedProject ? (
@@ -186,12 +172,12 @@ const ProjectsList = () => {
                 value={selectedService ? selectedService.name : ''}
 
                 onChange={(e) => {
-                  const selected = availableServices.find((service) => service.name === e.target.value);
+                  const selected = available.find((service) => service.name === e.target.value);
                   setSelectedService(selected);
                 }}
               >
                 <option value="">--Select a service--</option>
-                {availableServices.map((service, index) => (
+                {available.map((service, index) => (
                   <option key={index} value={service.name}>
                     {service.name}
                   </option>

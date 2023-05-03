@@ -3,87 +3,32 @@ import AppBar from "./AppBar";
 import DashboardCard from "./DashboardCard";
 // import "./Maindashbord.css";
 import { Route, Routes } from "react-router-dom";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import "./Table1.css";
+import axios from "axios";
 
 const Dashboard = () => {
+  const [projects, setProjects] = useState([]);
+  useEffect(() => {
+    fetchProjects();
+  }, []);
 
-  const employeeNames = [
-    'Ahmed',
-    'Saad',
-    'Yassine',
-    'Suhayb',
-    'Hamza',
-    'Driss',
-  ];
 
-  const getRandomEmployee = () => {
-    const randomIndex = Math.floor(Math.random() * employeeNames.length);
-    return employeeNames[randomIndex];
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/projects');
+      setProjects(response.data || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
   };
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      name: "Project 1",
-      owner: "Yassine Ibrok",
-      budget: 5000,
-      services: [
-        { name: "Service 1", price: 10, employee: getRandomEmployee() },
-        { name: "Service 2", price: 200, employee: getRandomEmployee() },
-        { name: "Service 3", price: 300, employee: getRandomEmployee() },
-      ],
-    },
-    {
-      id: 2,
-      name: "Project 2",
-      owner: "Driss Kettani",
-      budget: 8000,
-      services: [
-        { name: "Service 4", price: 400, employee: getRandomEmployee() },
-        { name: "Service 5", price: 500, employee: getRandomEmployee() },
-        { name: "Service 6", price: 600, employee: getRandomEmployee() },
-      ],
-    },
-    {
-      id: 3,
-      name: "Project 3",
-      owner: "Suhayb Daud",
-      budget: 12000,
-      services: [
-        { name: "Service 7", price: 700, employee: getRandomEmployee() },
-        { name: "Service 8", price: 800, employee: getRandomEmployee() },
-        { name: "Service 9", price: 900, employee: getRandomEmployee() },
-      ],
-    },
-    {
-      id: 4,
-      name: "Project 4",
-      owner: "Suhayb Daud",
-      budget: 14000,
-      services: [
-        { name: "Service 10", price: 700, employee: getRandomEmployee() },
-        { name: "Service 11", price: 800, employee: getRandomEmployee() },
-        { name: "Service 12", price: 900, employee: getRandomEmployee()},
-      ],
-    },
-    {
-      id: 5,
-      name: "Project 5",
-      owner: "Driss Kettani",
-      budget: 34000,
-      services: [
-        { name: "Service 13", price: 700, employee: getRandomEmployee() },
-        { name: "Service 14", price: 800, employee: getRandomEmployee() },
-        { name: "Service 15", price: 900, employee: getRandomEmployee() },
-      ],
-    },
-  ]);
+
+
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const navigate = useNavigate();
   const numberOfProjects = projects.length;
-  const amountSpent = 1200;
-  const nextAppointment = "April 30, 2023";
+
   const username = "yassine ibork";
   const [sortOrder, setSortOrder] = useState("asc"); // 'asc' for ascending, 'desc' for descending
 

@@ -1,56 +1,48 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate,useLocation } from 'react-router-dom';
 import AppBar from './AppBar';
 import DashboardCard from './DashboardCard';
-import ProjectModal from './ProjectModal';
-import ProjectDetails from './ProjectDetails';
+// import ProjectModal from './ProjectModal';
+// import ProjectDetails from './ProjectDetails';
 import './Dashboard.css';
 import CreateProjectModal from './CreateProjectModal';
+import axios from 'axios';
 
 const Dashboard = () => {
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      name: 'Project 1',
-      owner: 'Yassine Ibrok',
-      budget: 5000,
-      services: [
-        { name: 'Service 1', price: 100 },
-        { name: 'Service 2', price: 200 },
-        { name: 'Service 3', price: 300 },
-      ],
-    },
-    {
-      id: 2,
-      name: 'Project 2',
-      owner: 'Driss Kettani',
-      budget: 8000,
-      services: [
-        { name: 'Service 4', price: 400 },
-        { name: 'Service 5', price: 500 },
-        { name: 'Service 6', price: 600 },
-      ],
-    },
-    {
-      id: 3,
-      name: 'Project 3',
-      owner: 'Suhayb Daud',
-      budget: 12000,
-      services: [
-        { name: 'Service 7', price: 700 },
-        { name: 'Service 8', price: 800 },
-        { name: 'Service 9', price: 900 },
-      ],
-    },
-  ]);
+  const [projects, setProjects] = useState([]);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const navigate = useNavigate();
-  const numberOfProjects = projects.length;
-  const amountSpent = 1200;
-  const nextAppointment = 'April 30, 2023';
-  const username = 'yassine ibork';
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+  const [Extrainfo, setExtrainfo] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/projects');
+      setProjects(response.data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchExtrainfo();
+  }, []);
+
+  const fetchExtrainfo = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/extrainfo');
+      setExtrainfo(response.data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
   const handleCreateProject = (project) => {
     setProjects([...projects, { ...project, id: projects.length + 1 }]);
   };
@@ -61,15 +53,30 @@ const Dashboard = () => {
   };
 
   const handleCloseModal = () => {
-    setShowProjectModal(false);
     setSelectedProject(null);
   };
+
+  const numberOfProjects = projects.length;
+  const amountSpent = Extrainfo.amountSpent;
+  const nextAppointment = Extrainfo.nextAppointment;
+  const username = 'Yassine Ibork';
+
+  const { state } = location;
+  const [appointmentSubmitted, setAppointmentSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (state && state.appointmentSubmitted) {
+      setAppointmentSubmitted(false);
+      console.log('state', state);
+    }
+  }, [state]);
 
   return (
     <>
       <AppBar username={username} />
       <div className="container">
         <h2>Dashboard</h2>
+
         <div className="dashboard-cards">
           <DashboardCard
             title="Number of Projects"
@@ -97,8 +104,8 @@ const Dashboard = () => {
               </button>
             </h3>
             {showCreateProjectModal && (
-  <CreateProjectModal onCreate={handleCreateProject} onClose={() => setShowCreateProjectModal(false)} />
-)}
+              <CreateProjectModal onCreate={handleCreateProject} onClose={() => setShowCreateProjectModal(false)} />
+            )}
 
             <div className="project-cards">
               {projects.map((project) => (
@@ -111,10 +118,10 @@ const Dashboard = () => {
             </div>
           </div>
         )}
-        {selectedProject && (
+        {/* {selectedProject && (
           <ProjectDetails project={selectedProject} onClose={handleCloseModal} />
 
-        )}
+        )} */}
         
       </div>
       
@@ -122,4 +129,6 @@ const Dashboard = () => {
   );
 };
 
+
 export default Dashboard;
+
