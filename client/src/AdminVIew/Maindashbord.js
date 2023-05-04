@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import AppBar from "./AppBar";
 import DashboardCard from "./DashboardCard";
-import { Route, Routes } from "react-router-dom";
 import "./Maindashbord.css";
 import React, { useState, useMemo, useEffect } from "react";
 import "./Table1.css";
