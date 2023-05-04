@@ -32,14 +32,7 @@ const Dashboard = () => {
     }
   };
 
-  // const fetchProjectsByUsername = async (username) => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:1000/api/projects/by-owner/${username}`);
-  //     setProjects(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching projects by username:", error);
-  //   }
-  // };
+
 
   useEffect(() => {
     fetchExtrainfo();

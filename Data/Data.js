@@ -82,12 +82,31 @@ const projects = [
     },
   ];
   
+  const Extrainfo = {
+    nextAppointment: "May 30, 2023",
+    username: "Yassine ibork",
+    get amountSpent() {
+      let total = 0;
+      for (const project of projects) {
+        if (project.owner === this.username) {
+          total += project.budget;
+        }
+      }
+      return total;
+    }
+  };
+  const Extrainfo2 = {
+
+    get totalAmount() {
+      let total = 0;
+      for (const project of projects) {
+        total += project.budget;
+      }
+      return total;
+    }
+  };
   
-const Extrainfo = {
-  amountSpent: 17000,
-  nextAppointment: "May 30, 2023",
-  username: "Yassine ibork",
-};
+
 
 const availableServices = [
   { name: 'Service 1', price: 100 },
@@ -115,12 +134,27 @@ const timeSlots = [
   "17:00",
 ];
 
+const defaultAccounts = [
+  {
+    email: 'client@example.com',
+    password: 'client123',
+    type: 'client',
+  },
+  {
+    email: 'employee@example.com',
+    password: 'employee123',
+    type: 'employee',
+  },
+];
+
 module.exports = {
   aboutContent,
   employeeNames,
   projects,
   Extrainfo,
+  Extrainfo2,
   availableServices,
   appointments,
   timeSlots,
+  defaultAccounts,
 };

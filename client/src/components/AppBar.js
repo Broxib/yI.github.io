@@ -1,12 +1,13 @@
-import React from 'react';
-import { NavLink,useNavigate } from 'react-router-dom';
-import './AppBar.css';
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./AppBar.css";
+
 
 const AppBar = ({ username }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.clear();
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -28,9 +29,18 @@ const AppBar = ({ username }) => {
           <NavLink to="/manageaccount" activeClassName="active">
             Welcome, {username}!
           </NavLink>
-          <NavLink to="/" onClick={handleLogout}>
+          <button
+            onClick={() => {
+              // Clear user data here...
+              localStorage.removeItem("isLoggedIn");
+              localStorage.removeItem("userType");
+
+              // Then navigate to login page
+              navigate("/login");
+            }}
+          >
             Logout
-          </NavLink>
+          </button>
         </div>
       </nav>
     </header>

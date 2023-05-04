@@ -11,7 +11,7 @@ const MainDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [Extrainfo, setExtrainfo] = useState([]);
   const [clientsCount, setClientsCount] = useState(0);
-  const amountSpent = Extrainfo.amountSpent;
+  const amountSpent = Extrainfo.totalAmount;
   const { clientName } = useParams();
   useEffect(() => {
     const fetchProjects = async () => {
@@ -109,7 +109,7 @@ const MainDashboard = () => {
 
   const fetchExtrainfo = async () => {
     try {
-      const response = await axios.get('http://localhost:1000/api/extrainfo');
+      const response = await axios.get('http://localhost:1000/api/extrainfo2');
       setExtrainfo(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);

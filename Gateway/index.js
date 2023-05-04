@@ -146,6 +146,26 @@ app.get("/api/projects/by-owner/:owner", async (req, res) => {
   }
 });
 
+app.post("/api/account", async (req, res) => {
+  try {
+    const response = await axios.post("http://localhost:2000/account", req.body);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error creating account from business logic layer:", error);
+    res.status(500).json({ message: "Error creating account" });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  try {
+    const response = await axios.post("http://localhost:2000/login", req.body);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error login user from business logic layer:", error);
+    res.status(500).json({ message: "Error login user" });
+  }
+});
+
 
 app.post("/api/projects", async (req, res) => {
   try {
@@ -171,6 +191,15 @@ app.get("/api/projects", async (req, res) => {
 });
 
 app.get("/api/extrainfo", async (req, res) => {
+  try {
+    const response = await axios.get("http://localhost:2000/extrainfo");
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching projects in business logic layer:", error);
+    res.status(500).json({ message: "Error fetching extrainfo" });
+  }
+});
+app.get("/api/extrainfo2", async (req, res) => {
   try {
     const response = await axios.get("http://localhost:2000/extrainfo");
     res.json(response.data);

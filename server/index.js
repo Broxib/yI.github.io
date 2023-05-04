@@ -4,9 +4,11 @@ const {
   aboutContent,
   projects,
   Extrainfo,
+  Extrainfo2,
   availableServices,
   appointments,
   timeSlots,
+  defaultAccounts,
 } = require("../Data/Data.js");
 
 
@@ -202,6 +204,49 @@ app.get("/timeSlots", (req, res) => {
   res.json(combinedDateTimeSlots);
 });
 
+async function createAccount(accountData) {
+  // You can perform additional validation, save the account data to a database, or call another API here.
+  // For the purpose of this example, we'll just return a success message.
+
+  return { message: "Account created successfully" };
+}
+
+async function loginUser(userData) {
+  const { email, password } = userData;
+  const account = defaultAccounts.find(
+    (account) => account.email === email && account.password === password
+  );
+
+  if (account) {
+    return { userType: account.type };
+  } else {
+    console.log('Invalid email or password');
+    return null;
+  }
+}
+
+app.post('/login', async (req, res) => {
+  try {
+    const userData = req.body;
+    console.log(userData);
+    const result = await loginUser(userData);
+    console.log(result);
+    res.status(200).json(result);
+  } catch (error) {
+    // ... error handling ...
+  }
+});
+
+app.post('/account', async (req, res) => {
+  try {
+    const accountData = req.body;
+    const result = await createAccount(accountData);
+    res.status(200).json(result);
+  } catch (error) {
+    // ... error handling ...
+  }
+});
+
 
 
 app.post("/projects", (req, res) => {
@@ -222,10 +267,13 @@ app.get("/projects", (req, res) => {
   res.json(projects);
 });
 
-
-
 app.get("/extrainfo", (req, res) => {
+  console.log(Extrainfo.amountSpent);
   res.json(Extrainfo);
+});
+app.get("/extrainfo2", (req, res) => {
+
+  res.json(Extrainfo2);
 });
 
 app.post("/projects", (req, res) => {
