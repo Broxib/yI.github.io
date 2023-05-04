@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './Appointment.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 const AppointmentView = () => {
   const [appointmentDate, setAppointmentDate] = useState('');
   const [appointmentTime, setAppointmentTime] = useState('');
+  const navigate = useNavigate();
 
   const handleDateChange = (event) => {
     setAppointmentDate(event.target.value);
@@ -12,11 +16,19 @@ const AppointmentView = () => {
     setAppointmentTime(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Appointment date:', appointmentDate);
-    console.log('Appointment time:', appointmentTime);
-  
+    try {
+      const response = await axios.post('http://localhost:1000/api/appointments', {
+        date: appointmentDate,
+        time: appointmentTime,
+      });
+      console.log(response.data);
+      navigate('/AdminView', { state: { appointmentSubmitted: true } });
+
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

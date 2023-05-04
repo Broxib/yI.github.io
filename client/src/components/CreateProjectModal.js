@@ -5,7 +5,7 @@ import axios from 'axios';
 const CreateProjectModal = ({onCreate, onClose }) => {
 
   const [name, setName] = useState('');
-  const [owner, setOwner] = useState('');
+  const owner="Yassine Ibrok"
   const [budget, setBudget] = useState('');
 
   const handleSubmit = async (e) => {
@@ -42,7 +42,7 @@ const CreateProjectModal = ({onCreate, onClose }) => {
             type="text"
             id="owner"
             value={owner}
-            onChange={(e) => setOwner(e.target.value)}
+            // onChange={(e) => setOwner(e.target.value)}
             required
           />
 

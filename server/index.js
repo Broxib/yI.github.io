@@ -1,162 +1,184 @@
 const express = require("express");
 const app = express();
+const {
+  aboutContent,
+  projects,
+  Extrainfo,
+  availableServices,
+  appointments,
+  timeSlots,
+} = require("../Data/Data.js");
 
 
 const { startOfDay, addDays, formatISO } = require("date-fns");
 
-const aboutContent = `
-  <p>Welcome to [Accounting Firm Name], your trusted partner ...</p>
-  <p>Our services include tax planning and compliance ...</p>
-  <p>With [Accounting Firm Name], you can expect personalized ...</p>
-  <p>Contact us today to learn more ...</p>
-`;
-
 app.use(express.json());
 
-const employeeNames = [
-  'Ahmed',
-  'Saad',
-  'Yassine',
-  'Suhayb',
-  'Hamza',
-  'Driss',
-];
-
-const getRandomEmployee = () => {
-  const randomIndex = Math.floor(Math.random() * employeeNames.length);
-  return employeeNames[randomIndex];
+const formatAppointmentTime = (time) => {
+  return time;
 };
 
-const projects = [
+const saveAppointment = async (appointmentData) => {
+  // console.log('Appointment date:', appointmentData.date);
+  // console.log('Appointment time:', appointmentData.time);
 
-  {
-    id: 1,
-    name: "Project 1",
-    owner: "Yassine Ibrok",
-    budget: 5000,
-    services: [
-      { name: "Service 1", price: 10, employee: getRandomEmployee() },
-      { name: "Service 2", price: 200, employee: getRandomEmployee() },
-      { name: "Service 3", price: 300, employee: getRandomEmployee() },
-    ],
-    files: [],
-  },
-  {
-    id: 2,
-    name: "Project 2",
-    owner: "Driss Kettani",
-    budget: 8000,
-    services: [
-      { name: "Service 4", price: 400, employee: getRandomEmployee() },
-      { name: "Service 5", price: 500, employee: getRandomEmployee() },
-      { name: "Service 6", price: 600, employee: getRandomEmployee() },
-    ],
-    files: [],
-  },
-  {
-    id: 3,
-    name: "Project 3",
-    owner: "Suhayb Daud",
-    budget: 12000,
-    services: [
-      { name: "Service 7", price: 700, employee: getRandomEmployee() },
-      { name: "Service 8", price: 800, employee: getRandomEmployee() },
-      { name: "Service 9", price: 900, employee: getRandomEmployee() },
-    ],
-    files: [],
-  },
-  {
-    id: 4,
-    name: "Project 4",
-    owner: "Suhayb Daud",
-    budget: 14000,
-    services: [
-      { name: "Service 10", price: 700, employee: getRandomEmployee() },
-      { name: "Service 11", price: 800, employee: getRandomEmployee() },
-      { name: "Service 12", price: 900, employee: getRandomEmployee()},
-    ],
-    files: [],
-  },
-  {
-    id: 5,
-    name: "Project 5",
-    owner: "Driss Kettani",
-    budget: 34000,
-    services: [
-      { name: "Service 13", price: 700, employee: getRandomEmployee() },
-      { name: "Service 14", price: 800, employee: getRandomEmployee() },
-      { name: "Service 15", price: 900, employee: getRandomEmployee() },
-    ],
-    files: [],
-  },
-];
+  const formattedTime = formatAppointmentTime(appointmentData.time);
+  const newAppointment = {
+    date: appointmentData.date,
+    time: formattedTime,
+  };
+  appointments.push(newAppointment);
+  return newAppointment;
+};
 
-const getClientsWithProjectCount = (projects) => {
-  const clientsCount = {};
+const getAllAppointments = async () => {
+  return appointments;
+};
 
-  projects.forEach((project) => {
-    const owner = project.owner;
+app.post('/appointments', async (req, res) => {
+  try {
+    const appointmentData = req.body;
+    const result = await saveAppointment(appointmentData);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
-    if (clientsCount[owner]) {
-      clientsCount[owner].count++;
-      clientsCount[owner].projects.push(project);
-    } else {
-      clientsCount[owner] = { count: 1, projects: [project] };
+app.get('/appointments', async (req, res) => {
+  try {
+    const appointments = await getAllAppointments();
+    console.log('Appointments:', appointments);
+    res.status(200).json(appointments);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+const getProjectsByClient = async (clientName) => {
+  const project2 = projects.filter((project) => project.owner === clientName);
+  console.log('Project:', project2);
+  return project2;
+};
+
+app.get('/projects/:clientName', async (req, res) => {
+  try {
+    const project1 = await getProjectsByClient(req.params.clientName);
+    res.status(200).json(project1);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+const updateProject = async (projectId, clientName, updatedName) => {
+  projects.forEach((project, index) => {
+    if (project.id === parseInt(projectId)) {
+      projects[index].name = updatedName;
     }
   });
 
-  return clientsCount;
+  const updatedProjects = projects.filter((project) => project.owner === clientName);
+  return updatedProjects;
 };
 
 
+const deleteProject = async (projectId, clientName) => {
+  const projectIndex = projects.findIndex((project) => project.id === parseInt(projectId));
 
-const Extrainfo = {
-  amountSpent: 17000,
-  nextAppointment: "May 30, 2023",
-  username: "Yassine ibork",
+  if (projectIndex > -1) {
+    projects.splice(projectIndex, 1);
+  }
+
+  const updatedProjects = projects.filter((project) => project.owner === clientName);
+  return updatedProjects;
 };
 
-const availableServices = [
-  { name: 'Service 1', price: 100 },
-  { name: 'Service 2', price: 200 },
-  { name: 'Service 3', price: 300 },
-  { name: 'Service 4', price: 400 },
-  { name: 'Service 5', price: 500 },
-  { name: 'Service 6', price: 600 },
-  { name: 'Service 7', price: 700 },
-  { name: 'Service 8', price: 800 },
-  { name: 'Service 9', price: 900 },
-];
+async function editClient(clientName, newClientName) {
+  projects.forEach((project) => {
+    if (project.owner === clientName) {
+      project.owner = newClientName;
+    }
+  });
+  return projects;
+}
+async function deleteClient(clientName) {
+  return projects.filter((project) => project.owner !== clientName);
+}
+async function getClientsCount() {
+  const clientsSet = new Set();
+  projects.forEach((project) => {
+    clientsSet.add(project.owner);
+  });
+  return { count: clientsSet.size };
+}
+async function getProjectsByOwner(owner) {
+  return projects.filter((project) => project.owner === owner);
+}
+
+app.get('/projects/by-owner/:owner', async (req, res) => {
+  try {
+    const projectsByOwner = await getProjectsByOwner(req.params.owner);
+    res.status(200).json(projectsByOwner);
+  } catch (error) {
+    // ... error handling ...
+  }
+});
+
+app.get('/clients/count', async (req, res) => {
+  try {
+    const clientsCount = await getClientsCount();
+    res.status(200).json(clientsCount);
+  } catch (error) {
+    // ... error handling ...
+  }
+});
+
+app.delete('/clients', async (req, res) => {
+  try {
+    const updatedProjects = await deleteClient(req.body.clientName);
+    res.status(200).json(updatedProjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+app.patch('/clients', async (req, res) => {
+  try {
+    const updatedProjects = await editClient(req.body.clientName, req.body.newClientName);
+    res.status(200).json(updatedProjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/projects/:projectId', async (req, res) => {
+  try {
+    const updatedProjects = await updateProject(req.params.projectId, req.body.clientName, req.body.name);
+    res.status(200).json(updatedProjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    console.log(error);
+  }
+});
+
+app.delete('/projects/:projectId', async (req, res) => {
+  try {
+    const updatedProjects = await deleteProject(req.params.projectId,req.body.clientName);
+    res.status(200).json(updatedProjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Business Logic route for about content
 app.get("/about", (req, res) => {
   res.json({ content: aboutContent });
 });
 
-app.post("/appointments", (req, res) => {
-  // Save the appointment to a database, send confirmation emails, etc.
-  // ...
-
-  res.json({ message: "Appointment submitted successfully" });
-});
-
-
 app.get("/timeSlots", (req, res) => {
   // Fetch the available time slots from a database or external service
   // ...
-
-  const timeSlots = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-  ];
-
   const getDateSlots = () => {
     const dateSlots = [];
     for (let i = 0; i < 7; i++) {
@@ -200,9 +222,7 @@ app.get("/projects", (req, res) => {
   res.json(projects);
 });
 
-// app.get("/projectsEmp", (req, res) => {
-//   res.json(projectEMployee);
-// });
+
 
 app.get("/extrainfo", (req, res) => {
   res.json(Extrainfo);

@@ -23,12 +23,23 @@ const Dashboard = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('http://localhost:1000/api/projects');
+      const response = await axios.get(`http://localhost:1000/api/projects/by-owner/${username}`);;
       setProjects(response.data);
+      console.log('response', username);
+      console.log('response', response);
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
   };
+
+  // const fetchProjectsByUsername = async (username) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:1000/api/projects/by-owner/${username}`);
+  //     setProjects(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching projects by username:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchExtrainfo();
@@ -59,7 +70,7 @@ const Dashboard = () => {
   const numberOfProjects = projects.length;
   const amountSpent = Extrainfo.amountSpent;
   const nextAppointment = Extrainfo.nextAppointment;
-  const username = 'Yassine Ibork';
+  const username = 'Yassine Ibrok';
 
   const { state } = location;
   const [appointmentSubmitted, setAppointmentSubmitted] = useState(false);

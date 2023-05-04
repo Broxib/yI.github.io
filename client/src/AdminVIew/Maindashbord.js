@@ -1,36 +1,37 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AppBar from "./AppBar";
 import DashboardCard from "./DashboardCard";
-// import "./Maindashbord.css";
 import { Route, Routes } from "react-router-dom";
+import "./Maindashbord.css";
 import React, { useState, useMemo, useEffect } from "react";
 import "./Table1.css";
 import axios from "axios";
 
-const Dashboard = () => {
+const MainDashboard = () => {
   const [projects, setProjects] = useState([]);
+  const [Extrainfo, setExtrainfo] = useState([]);
+  const [clientsCount, setClientsCount] = useState(0);
+  const amountSpent = Extrainfo.amountSpent;
+  const { clientName } = useParams();
   useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:1000/api/projects");
+        setProjects(response.data || []);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    };
     fetchProjects();
-  }, []);
-
-
-  const fetchProjects = async () => {
-    try {
-      const response = await axios.get('http://localhost:1000/api/projects');
-      setProjects(response.data || []);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-    }
-  };
-
+    fetchClientsCount();
+  }, [clientName]);
 
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const navigate = useNavigate();
-  const numberOfProjects = projects.length;
 
   const username = "yassine ibork";
-  const [sortOrder, setSortOrder] = useState("asc"); // 'asc' for ascending, 'desc' for descending
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const clientsWithProjectCount = useMemo(() => {
     const clientsCount = {};
@@ -64,35 +65,56 @@ const Dashboard = () => {
       setSortOrder("asc");
     }
   };
-  const handleEdit = (id, updatedName) => {
-    setProjects(
-      projects.map((project) =>
-        project.id === id ? { ...project, owner: updatedName } : project
-      )
-    );
-  };
 
-  const handleEditClient = (clientName, clientProjects) => {
-    const updatedName = prompt("Enter new client name:", clientName);
+  const handleEditClient = async (clientName, clientProjects) => {
+    const newClientName = prompt("Enter new client name:", clientName);
 
-    if (updatedName) {
-      setProjects(
-        projects.map((project) =>
-          project.owner === clientName
-            ? { ...project, owner: updatedName }
-            : project
-        )
-      );
+    if (newClientName) {
+      try {
+        const response = await axios.patch(
+          "http://localhost:1000/api/clients",
+          { clientName, newClientName }
+        );
+        setProjects(response.data);
+      } catch (error) {
+        console.error("Error editing client:", error);
+      }
     }
   };
 
-  const handleDeleteClient = (clientName) => {
-    setProjects(projects.filter((project) => project.owner !== clientName));
+  const handleDeleteClient = async (clientName) => {
+    try {
+      const response = await axios.delete("http://localhost:1000/api/clients", {
+        data: { clientName },
+      });
+      setProjects(response.data);
+    } catch (error) {
+      console.error("Error deleting client:", error);
+    }
   };
 
+  const fetchClientsCount = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:1000/api/clients/count"
+      );
+      setClientsCount(response.data.count);
+    } catch (error) {
+      console.error("Error fetching clients count:", error);
+    }
+  };
+  useEffect(() => {
+    fetchExtrainfo();
+  }, []);
 
-
-  
+  const fetchExtrainfo = async () => {
+    try {
+      const response = await axios.get('http://localhost:1000/api/extrainfo');
+      setExtrainfo(response.data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
   return (
     <>
       <AppBar username={username} />
@@ -101,9 +123,14 @@ const Dashboard = () => {
         <div className="dashboard-cards">
           <DashboardCard
             title="Number of Clients"
-            value={numberOfProjects}
+            value={clientsCount}
             description="Projects you are currently managing"
             onClick={() => setShowProjectModal(true)}
+          />
+                  <DashboardCard
+            title="Amount Spent"
+            value={`$${amountSpent}`}
+            description="Total amount spent on services"
           />
         </div>
         {showProjectModal && (
@@ -156,4 +183,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default MainDashboard;
