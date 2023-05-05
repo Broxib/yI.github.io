@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Log.css'
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate
 const Log = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null);
   const navigate = useNavigate(); 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userType = await onLogin({ email, password });
-    if (userType === 'client') {
-      navigate('/');
-    } else if (userType === 'employee') {
-      navigate('/AdminView');
+    try {
+      const userData = {
+        email,
+        password,
+      };
+      const response = await axios.post("https://us-central1-gatewayfunc.cloudfunctions.net/app/api/login", userData);
+      const { userType } = response.data;
+  
+      if (userType) {
+        onLogin({ userType });
+        
+        if (userType === 'client') {
+          navigate('/');
+        } else if (userType === 'employee') {
+          navigate('/AdminView');
+        }
+      }
+    } catch (error) {
+      console.error("Error login user:", error);
     }
   };
+
+
 
 
   const handleCreateAccount = () => { // Add this function to handle navigation
@@ -57,9 +76,9 @@ const Log = ({ onLogin }) => {
   );
 };
 
-// Log.propTypes = {
-//   onLogin: PropTypes.func.isRequired,
-//   onCreateAccount: PropTypes.func.isRequired,
-// };
+Log.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+  onCreateAccount: PropTypes.func.isRequired,
+};
 
 export default Log;

@@ -4,6 +4,7 @@ const cors = require("cors"); // Import cors package
 
 const app = express();
 const PORT = 1000;
+const admin = require("firebase-admin")
 
 app.use(cors()); // Use cors middleware to enable CORS
 app.use(express.json());
@@ -11,7 +12,7 @@ app.use(express.json());
 // API Gateway route for about content
 app.get("/api/about", async (req, res) => {
   try {
-    const response = await axios.get("http://localhost:2000/about");
+    const response = await axios.get("https://us-central1-server1237128361.cloudfunctions.net/app/about");
     res.json(response.data);
   } catch (error) {
     console.error(
@@ -24,7 +25,7 @@ app.get("/api/about", async (req, res) => {
 app.post("/api/appointments", async (req, res) => {
   try {
     const response = await axios.post(
-      "http://localhost:2000/appointments",
+      "https://us-central1-server1237128361.cloudfunctions.net/app/appointments",
       req.body
     );
     res.json(response.data);
@@ -39,7 +40,7 @@ app.post("/api/appointments", async (req, res) => {
 
 app.get("/api/timeSlots", async (req, res) => {
   try {
-    const response = await axios.get("http://localhost:2000/timeSlots");
+    const response = await axios.get("https://us-central1-server1237128361.cloudfunctions.net/app00/timeSlots");
     res.json(response.data);
   } catch (error) {
     console.error(
@@ -53,7 +54,7 @@ app.get("/api/timeSlots", async (req, res) => {
 app.post("/api/projects", async (req, res) => {
   try {
     const response = await axios.post(
-      "http://localhost:2000/projects",
+      "https://us-central1-server1237128361.cloudfunctions.net/app/projects",
       req.body
     );
     res.json(response.data);
@@ -64,19 +65,21 @@ app.post("/api/projects", async (req, res) => {
 });
 
 app.get('/api/projects', async (req, res) => {
-  try {
-    const response = await axios.get('http://localhost:2000/projects');
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error fetching projects in business logic layer:', error);
-    res.status(500).json({ message: 'Error fetching projects' });
-  }
+ 
+  fetch('https://us-central1-server1237128361.cloudfunctions.net/app/projects')
+      .then(response => response.json())
+      .then(data => {
+        res.json(data);
+      })
+      .catch(error => {
+        console.error('Error fetching projects in business logic layer:', error);
+        res.status(500).json({ message: 'Error fetching projects' });   });
 });
 
 
 app.get('/api/extrainfo', async (req, res) => {
   try {
-    const response = await axios.get('http://localhost:2000/extrainfo');
+    const response = await axios.get('https://us-central1-server1237128361.cloudfunctions.net/app/extrainfo');
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching projects in business logic layer:', error);
@@ -86,7 +89,7 @@ app.get('/api/extrainfo', async (req, res) => {
 
 app.get('/api/availableServices', async (req, res) => {
   try {
-    const response = await axios.get('http://localhost:2000/availableServices');
+    const response = await axios.get('https://us-central1-server1237128361.cloudfunctions.net/app/availableServices');
     res.json(response.data);
   } catch (error) {
     console.error('Error fetching projects in business logic layer:', error);
@@ -97,3 +100,4 @@ app.get('/api/availableServices', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`API Gateway listening on port ${PORT}`);
 });
+

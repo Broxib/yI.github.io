@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import './CreateProjectModal.css';
-import axios from 'axios';
+import React, { useState } from "react";
+import "./CreateProjectModal.css";
+import axios from "axios";
 
-const CreateProjectModal = ({onCreate, onClose }) => {
-
-  const [name, setName] = useState('');
-  const [owner, setOwner] = useState('');
-  const [budget, setBudget] = useState('');
+const CreateProjectModal = ({ onCreate, onClose }) => {
+  const [name, setName] = useState("");
+  const owner = "Yassine Ibrok";
+  const [budget, setBudget] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:1000/api/projects', { name, owner, budget: parseInt(budget, 10) });
+      await axios.post("https://us-central1-gatewayfunc.cloudfunctions.net/app/api/projects", {
+        name,
+        owner,
+        budget: parseInt(budget, 10),
+      });
       onCreate({ name, owner, budget: parseInt(budget, 10) });
       onClose();
     } catch (error) {
-      console.error('Error creating project:', error);
+      console.error("Error creating project:", error);
     }
   };
-
-
-
-
 
   return (
     <div className="create-project-modal">
@@ -42,7 +41,7 @@ const CreateProjectModal = ({onCreate, onClose }) => {
             type="text"
             id="owner"
             value={owner}
-            onChange={(e) => setOwner(e.target.value)}
+            // onChange={(e) => setOwner(e.target.value)}
             required
           />
 

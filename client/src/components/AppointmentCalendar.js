@@ -10,7 +10,7 @@ const AppointmentCalendar = ({ onTimeSlotSelected }) => {
   useEffect(() => {
     const fetchTimeSlots = async () => {
       try {
-        const response = await axios.get("http://localhost:1000/api/timeSlots");
+        const response = await axios.get("https://us-central1-gatewayfunc.cloudfunctions.net/app/api/timeSlots");
         setTimeSlots(response.data);
       } catch (error) {
         console.error("Error fetching time slots:", error);

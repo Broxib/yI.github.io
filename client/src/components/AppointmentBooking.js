@@ -20,7 +20,7 @@ const AppointmentBooking = () => {
 
   const handleSubmitAppointment = async () => {
     try {
-      await axios.post('http://localhost:1000/api/appointments', {
+      await axios.post('https://us-central1-gatewayfunc.cloudfunctions.net/app/api/appointments', {
         timeSlot: selectedTimeSlot,
         details: appointmentDetails,
       });

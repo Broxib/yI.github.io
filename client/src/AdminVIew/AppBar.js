@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./AppBar.css";
+
+
 
 const AppBar = ({ username }) => {
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState("option1");
+  const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
@@ -12,7 +15,7 @@ const AppBar = ({ username }) => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    console.log("Search text:", searchText); 
+    console.log("Search text:", searchText);
   };
 
   const handleOptionChange = (event) => {
@@ -54,11 +57,21 @@ const AppBar = ({ username }) => {
       </div>
       {/* <div className="app-bar-user"> */}
       <nav className="app-bar-nav">
-      <NavLink to="/manageaccount"  activeClassName="active">
+        <NavLink to="/manageaccount" activeClassName="active">
           Welcome, {username}!
-      </NavLink>
+        </NavLink>
+        <button
+          onClick={() => {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("userType");
+
+            window.location.href="/";
+          }}
+        >
+          Logout
+        </button>
       </nav>
-      
+
       {/* </div> */}
     </header>
   );

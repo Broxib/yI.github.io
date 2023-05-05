@@ -23,12 +23,16 @@ const Dashboard = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('http://localhost:1000/api/projects');
+      const response = await axios.get(`https://us-central1-gatewayfunc.cloudfunctions.net/app/api/projects/by-owner/${username}`);;
       setProjects(response.data);
+      console.log('response', username);
+      console.log('response', response);
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
   };
+
+
 
   useEffect(() => {
     fetchExtrainfo();
@@ -36,7 +40,7 @@ const Dashboard = () => {
 
   const fetchExtrainfo = async () => {
     try {
-      const response = await axios.get('http://localhost:1000/api/extrainfo');
+      const response = await axios.get('https://us-central1-gatewayfunc.cloudfunctions.net/app/api/extrainfo');
       setExtrainfo(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);
@@ -59,7 +63,7 @@ const Dashboard = () => {
   const numberOfProjects = projects.length;
   const amountSpent = Extrainfo.amountSpent;
   const nextAppointment = Extrainfo.nextAppointment;
-  const username = 'Yassine Ibork';
+  const username = 'Yassine Ibrok';
 
   const { state } = location;
   const [appointmentSubmitted, setAppointmentSubmitted] = useState(false);
@@ -120,7 +124,6 @@ const Dashboard = () => {
         )}
         {/* {selectedProject && (
           <ProjectDetails project={selectedProject} onClose={handleCloseModal} />
-
         )} */}
         
       </div>
@@ -131,4 +134,3 @@ const Dashboard = () => {
 
 
 export default Dashboard;
-

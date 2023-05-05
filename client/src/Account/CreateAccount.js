@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './CreateAccount.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CreateAccount = ({ onCreate }) => {
     const navigate = useNavigate();
@@ -15,19 +16,35 @@ const CreateAccount = ({ onCreate }) => {
   const [nationalId, setNationalId] = useState('');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords don't match");
       return;
     } else {
-      setShowSuccessMessage(true);
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-        navigate('/');
-      }, 3000);
+      try {
+        const accountData = {
+          email,
+          password,
+          name,
+          age,
+          dob,
+          nationalId,
+        };
+        const response = await axios.post("https://us-central1-gatewayfunc.cloudfunctions.net/app/api/account", accountData);
+        setShowSuccessMessage(true);
+        setTimeout(() => {
+          setShowSuccessMessage(false);
+          navigate('/');
+        }, 3000);
+      } catch (error) {
+        console.error("Error creating account:", error);
+      }
     }
   };
+
+
+
 
   return (
     <div className="create-account-form">

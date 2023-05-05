@@ -12,7 +12,7 @@ const AboutUs = () => {
 
   async function fetchAboutContent() {
     try {
-      const response = await axios.get('http://localhost:1000/api/about');
+      const response = await axios.get('https://us-central1-gatewayfunc.cloudfunctions.net/app/api/about');
       setAboutContent(response.data.content);
       console.log("'About content:', response.data.content");
     } catch (error) {

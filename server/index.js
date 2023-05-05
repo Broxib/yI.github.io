@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-
-
 const { startOfDay, addDays, formatISO } = require("date-fns");
+const cors = require('cors')({origin: true});
+app.use(cors);
 
 const aboutContent = `
   <p>Welcome to [Accounting Firm Name], your trusted partner ...</p>
